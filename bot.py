@@ -10,6 +10,7 @@ p_channels = [797634311905738783, 797634937594708038, 797635544255168522, 797635
 797636051836993546, 797637409458094140, 797637561992085514, 797637707597742095,
 797637802182574110, 797637926397673472, 797688928865091625]
 
+new_messages = []
 
 key = 'foobar' 
 
@@ -27,7 +28,10 @@ async def on_message(message):
         await message.add_reaction('\U0001F595')
         await message.add_reaction('\u2611')
         return
-    
+    if message.channel.id == 796911223668998144 && message.content.startswith("$sendit"):
+        for i in new_messages:
+            await cli.get_channel(796911346817957939).send(i)
+        new_messages = []
     if message.author == cli.user:
         return
 
@@ -40,7 +44,7 @@ async def on_message(message):
     for i in p_channels:
         if i == message.channel.id:
             await cli.get_channel(796911223668998144).send(new_message)
-            await message.delete()
+            #await message.delete()
             return
 
 @cli.event
@@ -64,8 +68,12 @@ async def on_reaction_add(reaction, user):
     #new_message = message.author.display_name + ' said:\n' + message.content
 
     if(reaction.emoji == '\u2611'):
-        await cli.get_channel(796911346817957939).send(message.content)
-        await message.delete()
+        new_messages.append(message.content)
+        await cli.get_channel(796911223668998144).send("Current Queue:")
+        for i in new_messages:
+            await cli.get_channel(796911223668998144).send(i)
+         #copy this to the send messages function
+         #await message.delete()
     elif (reaction.emoji == '\U0001F595'): 
         await message.delete()
 
