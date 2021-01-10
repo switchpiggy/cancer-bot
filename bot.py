@@ -26,8 +26,8 @@ async def on_message(message):
     if message.author == cli.user:
         return
     if message.channel.id == 796911223668998144 && message.content.startswith("> "):
-            await message.add_reaction('\U0001F595')
-            await message.add_reaction('\u2611')
+        await message.add_reaction('\U0001F595')
+        await message.add_reaction('\u2611')
     if message.channel.id == 796911223668998144 && message.content.startswith("sendit"):
         for i in new_messages:
             await cli.get_channel(796911346817957939).send(i)
