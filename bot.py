@@ -24,17 +24,17 @@ async def on_ready():
 @cli.event
 async def on_message(message):
     global new_messages
-    if message.channel.id == 796911223668998144 && message.content.startswith("> "):
+    if message.channel.id == 796911223668998144 and message.content.startswith("> "):
         await message.add_reaction('\U0001F595')
         await message.add_reaction('\u2611')
     if message.author == cli.user:
         return
-    if message.channel.id == 796911223668998144 && message.content.startswith("sendit"):
+    if message.channel.id == 796911223668998144 and message.content.startswith("sendit"):
         await cli.get_channel(796911223668998144).send("sent & cleared boiiiss")
         for i in new_messages:
             await cli.get_channel(796911346817957939).send(i)
         new_messages = []
-    if message.channel.id == 796911223668998144 && message.content.startswith("clear"):
+    if message.channel.id == 796911223668998144 and message.content.startswith("clear"):
         await cli.get_channel(796911223668998144).send("cleared boiiiss")
         new_message = []
     
