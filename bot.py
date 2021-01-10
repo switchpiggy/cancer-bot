@@ -30,12 +30,12 @@ async def on_message(message):
     if message.author == cli.user:
         return
     if message.channel.id == 796911223668998144 and message.content.startswith("sendit"):
-        await cli.get_channel(796911223668998144).send("sent & cleared boiiiss")
+        await message.channel.send("sent&cleared boiiiss")
         for i in new_messages:
             await cli.get_channel(796911346817957939).send(i)
         new_messages = []
     if message.channel.id == 796911223668998144 and message.content.startswith("clear"):
-        await cli.get_channel(796911223668998144).send("cleared boiiiss")
+        await message.channel.send("cleared boiiiss")
         new_message = []
     
     if message.content.startswith("miku"):
