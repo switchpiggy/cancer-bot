@@ -8,7 +8,7 @@ intents = discord.Intents.default()
 
 command_key = ';'
 
-key = 'Nzk3NjgzNjUzNjIyNjI4Mzcy.X_qCyw.EWgWJkNNF2vZoTMpOXXQ0mKvLNs'
+key = 'Nzk3NjgzNjUzNjIyNjI4Mzcy.X_qCyw.Z9ZgKzz1ac1efYKQgOQdrzhtwWA'
 
 logging.basicConfig(level=logging.INFO)
 
@@ -35,6 +35,13 @@ async def process_account(data, message):
     res = "User **" + a['username'] + "** found with name\n> " + a.get('name', "Unregistered") + '\n' + "> **Last Online:** " + str(datetime.fromtimestamp(a['last_online'])) + '\n> **FIDE Rating:** ' + str(a.get('fide', 'Unrated'))
     res2 = "\n> **Location: ** " + a.get('location', 'N/A')
     await message.channel.send(res + res2)
+
+async def process_ranks(rank, message):
+    data = requests.get('https://api.chess.com/pub/titled/' + rank).json()
+    if data.status_code != 200:
+        await process_get_error(data['status_code'], message)
+        return
+
     
 
 @cli.event
@@ -46,8 +53,13 @@ async def on_message(message):
     if not message.content.startswith(command_key):
         return
 
+    if message.content.startswith(command_key + 'getrank'):
+        args = message.content.split()[1]
+        process_ranks(args, message)
+
     if message.content.startswith(command_key + 'get'):
         args = message.content.split()
+        
         for name in args:
             if name.startswith(command_key):
                 continue
@@ -55,5 +67,5 @@ async def on_message(message):
             data = requests.get('https://api.chess.com/pub/player/' + name)
             await process_account(data, message)
 
-    
+
 cli.run(key)
