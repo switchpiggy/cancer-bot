@@ -23,6 +23,7 @@ async def on_ready():
 
 @cli.event
 async def on_message(message):
+    global new_messages
     if message.author == cli.user:
         return
     if message.channel.id == 796911223668998144 && message.content.startswith("> "):
@@ -46,6 +47,7 @@ async def on_message(message):
 
 @cli.event
 async def on_reaction_add(reaction, user):
+    global new_messages
     if user == cli.user:
         return
     
