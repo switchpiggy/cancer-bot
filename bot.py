@@ -23,26 +23,24 @@ async def on_ready():
 
 @cli.event
 async def on_message(message):
-    if message.channel.id == 796911223668998144 && message.content.startswith("$sendit"):
+    if message.author == cli.user:
+        return
+    if message.channel.id == 796911223668998144 && message.content.startswith("> "):
+            await message.add_reaction('\U0001F595')
+            await message.add_reaction('\u2611')
+    if message.channel.id == 796911223668998144 && message.content.startswith("sendit"):
         for i in new_messages:
             await cli.get_channel(796911346817957939).send(i)
         new_messages = []
-    if message.channel.id == 796911223668998144 && message.content.startswith("$clear"):
+    if message.channel.id == 796911223668998144 && message.content.startswith("clear"):
         new_message = []
-    if message.author == cli.user:
-        return
-
+    
     if message.content.startswith("miku"):
         await message.channel.send('kawaiiiiiiiiiii')
-
-
     new_message = '> ' + message.content + '\n -' + message.author.mention
-
     for i in p_channels:
         if i == message.channel.id:
             await cli.get_channel(796911223668998144).send(new_message)
-            await message.add_reaction('\U0001F595')
-            await message.add_reaction('\u2611')
             #await message.delete()
             return
 
