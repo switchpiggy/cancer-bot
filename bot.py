@@ -12,7 +12,7 @@ p_channels = [797634311905738783, 797634937594708038, 797635544255168522, 797635
 
 new_messages = []
 
-key = 'Nzk3NTk3Nzk1MDQ4NDg4OTcw.X_oy1A.KjdYt_tFy5V7yjCIQS3mpZDLcag' 
+key = 'Nzk3NTk3Nzk1MDQ4NDg4OTcw.X_oy1A.K_bIyixnojdpjoquYj99FY4p3TE'
 
 #async def process_command(command):
 
@@ -25,14 +25,14 @@ async def on_ready():
 async def on_message(message):
     if message.author == cli.user:
         return
-    if message.channel.id == 796911223668998144 && message.content.startswith("> "):
+    if message.channel.id == 796911223668998144 and message.content.startswith("> "):
             await message.add_reaction('\U0001F595')
             await message.add_reaction('\u2611')
-    if message.channel.id == 796911223668998144 && message.content.startswith("sendit"):
+    if message.channel.id == 796911223668998144 and message.content.startswith("sendit"):
         for i in new_messages:
             await cli.get_channel(796911346817957939).send(i)
         new_messages = []
-    if message.channel.id == 796911223668998144 && message.content.startswith("clear"):
+    if message.channel.id == 796911223668998144 and message.content.startswith("clear"):
         new_message = []
     
     if message.content.startswith("miku"):
