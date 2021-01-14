@@ -13,7 +13,7 @@ p_channels = [797634311905738783, 797634937594708038, 797635544255168522, 797635
 
 new_messages = []
 
-profanity = ["fuck", "shit", ""]
+profanity = []
 
 #async def process_command(command):
 
@@ -21,6 +21,10 @@ profanity = ["fuck", "shit", ""]
 @cli.event
 async def on_message(message):
     global new_messages
+    for i in profanity:
+        if i in message.content:
+            await message.delete()
+            break
     if message.channel.id == 796911223668998144 and message.content.startswith("> "):
         await message.add_reaction('\u2611')
         await message.add_reaction('\u274C')
