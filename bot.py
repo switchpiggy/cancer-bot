@@ -4,6 +4,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 cli = discord.Client()
+
 intents = discord.Intents.default()
 
 p_channels = [797634311905738783, 797634937594708038, 797635544255168522, 797635705755926538, 
@@ -12,34 +13,40 @@ p_channels = [797634311905738783, 797634937594708038, 797635544255168522, 797635
 
 new_messages = []
 
-key = 'Nzk3NTk3Nzk1MDQ4NDg4OTcw.X_oy1A.KjdYt_tFy5V7yjCIQS3mpZDLcag' 
+profanity = ["fuck", "shit", ""]
 
 #async def process_command(command):
 
 
 @cli.event
-async def on_ready():
-    print('Fuck python {0.user}'.format(cli))
-
-@cli.event
 async def on_message(message):
     global new_messages
     if message.channel.id == 796911223668998144 and message.content.startswith("> "):
-        await message.add_reaction('\U0001F595')
         await message.add_reaction('\u2611')
+        await message.add_reaction('\u274C')
+    if message.channel.id == 796911223668998144 and message.content.startswith("item:"):
+        await message.add_reaction('\u274C')
     if message.author == cli.user:
         return
-    if message.channel.id == 796911223668998144 and message.content.startswith("sendit"):
-        await message.channel.send("sent&cleared boiiiss")
+    if message.channel.id == 796911223668998144 and message.content.startswith("$send"):
         for i in new_messages:
-            await cli.get_channel(796911346817957939).send(i)
+            await cli.get_channel(798055248962256936).send(i)
         new_messages = []
-    if message.channel.id == 796911223668998144 and message.content.startswith("clear"):
-        await message.channel.send("cleared boiiiss")
+        await message.channel.send("sent & cleared boiiiss")
+    if message.channel.id == 796911223668998144 and message.content.startswith("$clear"):
         new_message = []
+        await message.channel.send("cleared boiiiss")
+    if message.channel.id == 796911223668998144 and message.content.startswith("$queue"):
+        await cli.get_channel(796911223668998144).send("Current Queue:")
+        for i in new_messages:
+            await cli.get_channel(796911223668998144).send("item: " + i)
+    if message.content.startswith("no u"):
+        await message.channel.send('no u')
+    if message.content.startswith("how to life"):
+        await message.channel.send('just don\'t')
+    #if message.content.startswith("miku"):
+    #    await message.channel.send('kawaiiiiiiiiiii')
     
-    if message.content.startswith("miku"):
-        await message.channel.send('kawaiiiiiiiiiii')
     new_message = '> ' + message.content + '\n -' + message.author.mention
     for i in p_channels:
         if i == message.channel.id:
@@ -68,12 +75,18 @@ async def on_reaction_add(reaction, user):
 
     #new_message = message.author.display_name + ' said:\n' + message.content
 
-    if(reaction.emoji == '\u2611'):
+    if(reaction.emoji == '\u2611' and message.content not in new_messages):
         new_messages.append(message.content)
-        await cli.get_channel(796911223668998144).send("Current Queue:")
-        for i in new_messages:
-            await cli.get_channel(796911223668998144).send(i)
          #copy this to the send messages function
          #await message.delete()
-    elif (reaction.emoji == '\U0001F595'): 
-        await message.delete()
+    elif (reaction.emoji == '\u274C'):
+        if (message.content.startswith("item:")):
+            for i in new_messages:
+                if (message.content[6:] == i):
+                    new_messages.remove(i)
+            await message.delete()
+        elif (message.content.startswith("> ")):
+            await message.delete()
+    #elif (reaction.emoji == '\U0001F595'): 
+    #await message.delete()
+cli.run('Nzk3NzI1NTI4MjU3MDY5MDU3.X_qpyg.OPLtJ64W2o2HqmOcZTbcie0Ca5Q')
