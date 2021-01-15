@@ -13,7 +13,7 @@ p_channels = [797634311905738783, 797634937594708038, 797635544255168522, 797635
 
 new_messages = []
 
-profanity = []
+profanity = ['fuck', 'fuckery', 'wtf', 'fucking', 'fucks', 'FUCK', 'shit', 'bullshit', 'bullshittery', 'bullshitting', 'motherfucker', 'MOTHERFUCKER', 'bitch', 'BITCH', 'ass', 'assfuckery', 'assfucking a bitch', 'ok that wasnt even a swear word i just wanted to type that']
 
 #async def process_command(command):
 
