@@ -9,7 +9,7 @@ intents = discord.Intents.default()
 
 p_channels = [797634311905738783, 797634937594708038, 797635544255168522, 797635705755926538, 
 797636051836993546, 797637409458094140, 797637561992085514, 797637707597742095,
-797637802182574110, 797637926397673472, 797688928865091625]
+797637802182574110, 797637926397673472, 797688928865091625, 801615042201124864]
 
 new_messages = []
 
@@ -21,10 +21,14 @@ profanity = ['fuck', 'fuckery', 'wtf', 'fucking', 'fucks', 'FUCK', 'shit', 'bull
 @cli.event
 async def on_message(message):
     global new_messages
-    for i in profanity:
-        if i in message.content:
+    words = message.content.split()
+    for i in words:
+        if i in profanity:
+            await message.channel.send("Woah there! Watch the profanity " + message.author.mention)
             await message.delete()
             break
+    if "orz" in message.content:
+        await message.channel.send("https://cdn.discordapp.com/attachments/798804481062993924/804575054117208084/745513885523509330.png")
     if message.channel.id == 796911223668998144 and message.content.startswith("> "):
         await message.add_reaction('\u2611')
         await message.add_reaction('\u274C')
@@ -40,6 +44,8 @@ async def on_message(message):
     if message.channel.id == 796911223668998144 and message.content.startswith("$clear"):
         new_message = []
         await message.channel.send("cleared boiiiss")
+    if message.channel.id == 796911223668998144 and message.content.startswith("$title"):
+        await cli.get_channel(798055248962256936).send(message.content[7:])
     if message.channel.id == 796911223668998144 and message.content.startswith("$queue"):
         await cli.get_channel(796911223668998144).send("Current Queue:")
         for i in new_messages:
@@ -54,6 +60,7 @@ async def on_message(message):
     new_message = '> ' + message.content + '\n -' + message.author.mention
     for i in p_channels:
         if i == message.channel.id:
+            await cli.get_channel(796911223668998144).send("NEW MESSAGE")
             await cli.get_channel(796911223668998144).send(new_message)
             #await message.delete()
             return
@@ -79,7 +86,7 @@ async def on_reaction_add(reaction, user):
 
     #new_message = message.author.display_name + ' said:\n' + message.content
 
-    if(reaction.emoji == '\u2611' and message.content not in new_messages):
+    if(reaction.emoji == '\u2611'): # and (message.content,user) not in new_messages
         new_messages.append(message.content)
          #copy this to the send messages function
          #await message.delete()
@@ -88,9 +95,10 @@ async def on_reaction_add(reaction, user):
             for i in new_messages:
                 if (message.content[6:] == i):
                     new_messages.remove(i)
+                    break
             await message.delete()
         elif (message.content.startswith("> ")):
             await message.delete()
     #elif (reaction.emoji == '\U0001F595'): 
     #await message.delete()
-cli.run('Nzk3NzI1NTI4MjU3MDY5MDU3.X_qpyg.OPLtJ64W2o2HqmOcZTbcie0Ca5Q')
+cli.run('Nzk3NzI1NTI4MjU3MDY5MDU3.X_qpyg.tdTEEdKgT1HQXwMGZpf9A5eymhs')
